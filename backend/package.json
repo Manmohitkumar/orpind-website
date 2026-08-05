@@ -42,7 +42,7 @@
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.14",
     "pdfkit": "^0.15.0",
-    "rate-limit-redis": "^6.0.0",
+    "rate-limit-redis": "^4.2.0",
     "razorpay": "^2.9.4",
     "resend": "^4.0.0",
     "sanitize-html": "^2.13.1",
