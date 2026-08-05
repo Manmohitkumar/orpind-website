@@ -47,3 +47,7 @@ next-env.d.ts
 /_test-*
 /startup2-err.log
 /backend.log
+
+# databases
+*.db
+*.db-journal
