@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Delivered</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #faf7f2; font-family: 'Helvetica Neue', Arial, sans-serif; color: #2d2a26; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    .header { background: linear-gradient(135deg, #2d7a4f, #3a9d62); padding: 40px 30px; text-align: center; }
+    .header h1 { color: #ffffff; font-size: 28px; margin: 0; font-weight: 300; letter-spacing: 2px; }
+    .body { padding: 40px 30px; text-align: center; }
+    .greeting { font-size: 22px; color: #2d2a26; margin-bottom: 20px; font-weight: 500; }
+    .check-icon { font-size: 64px; margin-bottom: 20px; }
+    .message { font-size: 15px; line-height: 1.7; color: #5a5550; margin-bottom: 25px; }
+    .order-badge { display: inline-block; background: #e8f5e9; padding: 10px 24px; border-radius: 6px; margin-bottom: 25px; }
+    .order-badge span { font-size: 16px; font-weight: 600; color: #2d7a4f; letter-spacing: 1px; }
+    .delivered-time { font-size: 14px; color: #8a8580; margin-bottom: 30px; }
+    .review-box { background: #faf7f2; border-radius: 8px; padding: 25px; margin-bottom: 30px; }
+    .review-box h3 { font-size: 16px; color: #2d2a26; margin: 0 0 10px; }
+    .review-box p { font-size: 14px; color: #5a5550; margin: 0 0 15px; line-height: 1.6; }
+    .cta-button { display: inline-block; background: linear-gradient(135deg, #b8860b, #d4a017); color: #ffffff; text-decoration: none; padding: 14px 40px; border-radius: 6px; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+    .divider { height: 1px; background: #e8e2d9; margin: 30px 0; }
+    .footer { background: #2d2a26; padding: 30px; text-align: center; }
+    .footer-text { color: #a09890; font-size: 12px; line-height: 1.6; margin: 0; }
+    .footer-links { margin-top: 15px; }
+    .footer-links a { color: #d4a017; text-decoration: none; margin: 0 10px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>ORPIND</h1>
+      <p style="color: rgba(255,255,255,0.85); margin: 5px 0 0; font-size: 13px; letter-spacing: 3px;">DELIVERED</p>
+    </div>
+    <div class="body">
+      <div class="check-icon">&#10003;&#65039;</div>
+      <p class="greeting">Delivered, {{firstName}}!</p>
+      <p class="message">
+        Your Orpind order has been delivered successfully. We hope you enjoy the authentic flavors
+        of Punjab's finest organic spices. Thank you for choosing quality over everything.
+      </p>
+      <div class="order-badge">
+        <span>Order {{orderNumber}}</span>
+      </div>
+      <p class="delivered-time">Delivered on {{deliveredAt}}</p>
+      <div class="divider"></div>
+      <div class="review-box">
+        <h3>How was your experience?</h3>
+        <p>Your feedback helps us serve you better and helps other spice lovers discover Orpind.</p>
+        <a href="https://orpind.com/review" class="cta-button">Write a Review</a>
+      </div>
+      <p class="message" style="margin-bottom: 0;">
+        Questions or concerns about your order? Reach out to us at
+        <a href="mailto:support@orpind.com" style="color: #b8860b; text-decoration: none;">support@orpind.com</a>
+      </p>
+    </div>
+    <div class="footer">
+      <p class="footer-text">
+        Orpind &mdash; Bringing Punjab's finest spices to your kitchen.<br>
+        &copy; 2026 Orpind. All rights reserved.
+      </p>
+      <div class="footer-links">
+        <a href="https://orpind.com/products">Shop Again</a>
+        <a href="https://orpind.com/orders">My Orders</a>
+        <a href="https://orpind.com/contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

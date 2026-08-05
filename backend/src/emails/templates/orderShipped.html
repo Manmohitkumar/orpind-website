@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Shipped</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #faf7f2; font-family: 'Helvetica Neue', Arial, sans-serif; color: #2d2a26; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    .header { background: linear-gradient(135deg, #b8860b, #d4a017); padding: 40px 30px; text-align: center; }
+    .header h1 { color: #ffffff; font-size: 28px; margin: 0; font-weight: 300; letter-spacing: 2px; }
+    .body { padding: 40px 30px; }
+    .greeting { font-size: 22px; color: #2d2a26; margin-bottom: 20px; font-weight: 500; }
+    .message { font-size: 15px; line-height: 1.7; color: #5a5550; margin-bottom: 30px; }
+    .tracking-box { background: linear-gradient(135deg, #b8860b, #d4a017); border-radius: 8px; padding: 30px; text-align: center; margin-bottom: 30px; }
+    .tracking-label { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.8); margin-bottom: 8px; }
+    .tracking-number { font-size: 20px; font-weight: 700; color: #ffffff; letter-spacing: 2px; margin: 0; }
+    .info-row { display: flex; justify-content: space-between; background: #faf7f2; border-radius: 6px; padding: 15px 20px; margin-bottom: 10px; }
+    .info-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #8a8580; }
+    .info-value { font-size: 14px; font-weight: 600; color: #2d2a26; text-align: right; }
+    .order-badge { display: inline-block; background: #f0ebe3; padding: 10px 24px; border-radius: 6px; margin-bottom: 25px; }
+    .order-badge span { font-size: 16px; font-weight: 600; color: #b8860b; letter-spacing: 1px; }
+    .divider { height: 1px; background: #e8e2d9; margin: 30px 0; }
+    .footer { background: #2d2a26; padding: 30px; text-align: center; }
+    .footer-text { color: #a09890; font-size: 12px; line-height: 1.6; margin: 0; }
+    .footer-links { margin-top: 15px; }
+    .footer-links a { color: #d4a017; text-decoration: none; margin: 0 10px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>ORPIND</h1>
+      <p style="color: rgba(255,255,255,0.85); margin: 5px 0 0; font-size: 13px; letter-spacing: 3px;">ORDER SHIPPED</p>
+    </div>
+    <div class="body">
+      <p class="greeting">Great news, {{firstName}}!</p>
+      <p class="message">
+        Your order is on its way to you. We have carefully packed your spices and handed them over
+        to our delivery partner for a safe journey to your doorstep.
+      </p>
+      <div class="order-badge">
+        <span>Order {{orderNumber}}</span>
+      </div>
+      <div class="tracking-box">
+        <p class="tracking-label">Tracking Number</p>
+        <p class="tracking-number">{{trackingNumber}}</p>
+      </div>
+      <div class="info-row">
+        <div>
+          <div class="info-label">Carrier</div>
+          <div class="info-value">{{carrier}}</div>
+        </div>
+        <div>
+          <div class="info-label">Estimated Delivery</div>
+          <div class="info-value">{{estimatedDelivery}}</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <p class="message">
+        You can track your order in real time from your Orpind account. We will send you another
+        notification once your package has been delivered.
+      </p>
+    </div>
+    <div class="footer">
+      <p class="footer-text">
+        Orpind &mdash; Bringing Punjab's finest spices to your kitchen.<br>
+        &copy; 2026 Orpind. All rights reserved.
+      </p>
+      <div class="footer-links">
+        <a href="https://orpind.com/track">Track Order</a>
+        <a href="https://orpind.com/contact">Contact Support</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

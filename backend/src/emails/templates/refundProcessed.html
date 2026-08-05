@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refund Processed</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #faf7f2; font-family: 'Helvetica Neue', Arial, sans-serif; color: #2d2a26; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    .header { background: linear-gradient(135deg, #b8860b, #d4a017); padding: 40px 30px; text-align: center; }
+    .header h1 { color: #ffffff; font-size: 28px; margin: 0; font-weight: 300; letter-spacing: 2px; }
+    .body { padding: 40px 30px; }
+    .greeting { font-size: 22px; color: #2d2a26; margin-bottom: 20px; font-weight: 500; }
+    .message { font-size: 15px; line-height: 1.7; color: #5a5550; margin-bottom: 30px; }
+    .refund-box { background: #f0ebe3; border-radius: 8px; padding: 30px; margin-bottom: 30px; }
+    .refund-row { display: flex; justify-content: space-between; padding: 8px 0; }
+    .refund-row:not(:last-child) { border-bottom: 1px solid #e8e2d9; }
+    .refund-label { font-size: 13px; color: #8a8580; text-transform: uppercase; letter-spacing: 1px; }
+    .refund-value { font-size: 14px; font-weight: 600; color: #2d2a26; }
+    .refund-amount { font-size: 28px; font-weight: 700; color: #2d7a4f; margin: 15px 0; text-align: center; }
+    .status-badge { display: inline-block; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .status-processed { background: #e8f5e9; color: #2d7a4f; }
+    .status-pending { background: #fef3e2; color: #8a6d3b; }
+    .status-failed { background: #fde8e8; color: #c53030; }
+    .note { font-size: 13px; color: #8a8580; line-height: 1.6; margin-bottom: 25px; }
+    .divider { height: 1px; background: #e8e2d9; margin: 30px 0; }
+    .footer { background: #2d2a26; padding: 30px; text-align: center; }
+    .footer-text { color: #a09890; font-size: 12px; line-height: 1.6; margin: 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>ORPIND</h1>
+      <p style="color: rgba(255,255,255,0.85); margin: 5px 0 0; font-size: 13px; letter-spacing: 3px;">REFUND PROCESSED</p>
+    </div>
+    <div class="body">
+      <p class="greeting">Hello, {{firstName}}!</p>
+      <p class="message">
+        Your refund request has been processed. The amount will be credited to your original payment
+        method within 5-7 business days, depending on your bank or financial institution.
+      </p>
+      <div class="refund-box">
+        <div class="refund-row">
+          <span class="refund-label">Order Number</span>
+          <span class="refund-value">{{orderNumber}}</span>
+        </div>
+        <div class="refund-row">
+          <span class="refund-label">Refund Status</span>
+          <span class="refund-value"><span class="status-badge status-{{refundStatus}}">{{refundStatus}}</span></span>
+        </div>
+        <div class="refund-amount">{{refundAmount}}</div>
+      </div>
+      <p class="note">
+        If you have not received your refund after 7 business days, please contact your bank first
+        and then reach out to us with your order number for further assistance.
+      </p>
+      <div class="divider"></div>
+      <p class="message" style="margin-bottom: 0;">
+        Need help? Contact us at
+        <a href="mailto:support@orpind.com" style="color: #b8860b; text-decoration: none;">support@orpind.com</a>
+        and we will be happy to assist you.
+      </p>
+    </div>
+    <div class="footer">
+      <p class="footer-text">
+        Orpind &mdash; Bringing Punjab's finest spices to your kitchen.<br>
+        &copy; 2026 Orpind. All rights reserved.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

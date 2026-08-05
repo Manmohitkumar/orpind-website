@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{subject}}</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #faf7f2; font-family: 'Helvetica Neue', Arial, sans-serif; color: #2d2a26; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    .header { background: linear-gradient(135deg, #b8860b, #d4a017); padding: 40px 30px; text-align: center; }
+    .header h1 { color: #ffffff; font-size: 28px; margin: 0; font-weight: 300; letter-spacing: 2px; }
+    .body { padding: 40px 30px; }
+    .subject-title { font-size: 24px; color: #2d2a26; margin-bottom: 25px; font-weight: 600; text-align: center; }
+    .content { font-size: 15px; line-height: 1.8; color: #5a5550; }
+    .content h2 { font-size: 20px; color: #2d2a26; margin: 25px 0 12px; }
+    .content h3 { font-size: 17px; color: #2d2a26; margin: 20px 0 10px; }
+    .content p { margin: 0 0 15px; }
+    .content ul { padding-left: 20px; margin: 0 0 15px; }
+    .content li { margin-bottom: 8px; }
+    .content a { color: #b8860b; text-decoration: none; }
+    .content strong { color: #2d2a26; }
+    .cta-button { display: inline-block; background: linear-gradient(135deg, #b8860b, #d4a017); color: #ffffff !important; text-decoration: none !important; padding: 14px 40px; border-radius: 6px; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin: 20px 0; }
+    .divider { height: 1px; background: #e8e2d9; margin: 30px 0; }
+    .footer { background: #2d2a26; padding: 30px; text-align: center; }
+    .footer-text { color: #a09890; font-size: 12px; line-height: 1.6; margin: 0; }
+    .unsubscribe { margin-top: 15px; }
+    .unsubscribe a { color: #8a8580; text-decoration: underline; font-size: 11px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>ORPIND</h1>
+      <p style="color: rgba(255,255,255,0.85); margin: 5px 0 0; font-size: 13px; letter-spacing: 3px;">NEWSLETTER</p>
+    </div>
+    <div class="body">
+      <p class="subject-title">{{subject}}</p>
+      <div class="content">
+        {{content}}
+      </div>
+    </div>
+    <div class="footer">
+      <p class="footer-text">
+        Orpind &mdash; Bringing Punjab's finest spices to your kitchen.<br>
+        &copy; 2026 Orpind. All rights reserved.
+      </p>
+      <div class="unsubscribe">
+        <a href="{{unsubscribeUrl}}">Unsubscribe from our newsletter</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

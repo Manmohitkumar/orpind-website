@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Orpind</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #faf7f2; font-family: 'Helvetica Neue', Arial, sans-serif; color: #2d2a26; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    .header { background: linear-gradient(135deg, #b8860b, #d4a017); padding: 40px 30px; text-align: center; }
+    .header img { max-width: 160px; margin-bottom: 10px; }
+    .header h1 { color: #ffffff; font-size: 28px; margin: 0; font-weight: 300; letter-spacing: 2px; }
+    .body { padding: 40px 30px; }
+    .greeting { font-size: 22px; color: #2d2a26; margin-bottom: 20px; font-weight: 500; }
+    .message { font-size: 15px; line-height: 1.7; color: #5a5550; margin-bottom: 30px; }
+    .cta-button { display: inline-block; background: linear-gradient(135deg, #b8860b, #d4a017); color: #ffffff; text-decoration: none; padding: 14px 40px; border-radius: 6px; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+    .cta-button:hover { background: linear-gradient(135deg, #a07509, #c49515); }
+    .divider { height: 1px; background: #e8e2d9; margin: 30px 0; }
+    .features { display: flex; justify-content: space-around; margin: 30px 0; }
+    .feature { text-align: center; padding: 10px; }
+    .feature-icon { font-size: 28px; margin-bottom: 8px; }
+    .feature-title { font-size: 13px; color: #5a5550; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .footer { background: #2d2a26; padding: 30px; text-align: center; }
+    .footer-text { color: #a09890; font-size: 12px; line-height: 1.6; margin: 0; }
+    .footer-links { margin-top: 15px; }
+    .footer-links a { color: #d4a017; text-decoration: none; margin: 0 10px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>ORPIND</h1>
+      <p style="color: rgba(255,255,255,0.85); margin: 5px 0 0; font-size: 13px; letter-spacing: 3px;">FINEST ORGANIC SPICES</p>
+    </div>
+    <div class="body">
+      <p class="greeting">Welcome, {{firstName}}!</p>
+      <p class="message">
+        We are thrilled to have you join the Orpind family. You have just unlocked access to the finest organic spices,
+        handpicked from the lush fields of Punjab. Every product we offer is sourced directly from trusted farmers
+        who share our passion for quality and purity.
+      </p>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">&#127793;</div>
+          <div class="feature-title">100% Organic</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">&#128666;</div>
+          <div class="feature-title">Free Shipping</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">&#11088;</div>
+          <div class="feature-title">Premium Quality</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <p class="message">
+        Explore our curated collection of turmeric, red chili, garam masala, and specialty blends
+        crafted to bring authentic flavors to your kitchen.
+      </p>
+      <p style="text-align: center;">
+        <a href="https://orpind.com/products" class="cta-button">Explore Our Products</a>
+      </p>
+    </div>
+    <div class="footer">
+      <p class="footer-text">
+        Orpind &mdash; Bringing Punjab's finest spices to your kitchen.<br>
+        &copy; 2026 Orpind. All rights reserved.
+      </p>
+      <div class="footer-links">
+        <a href="https://orpind.com">Shop</a>
+        <a href="https://orpind.com/about">About</a>
+        <a href="https://orpind.com/contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

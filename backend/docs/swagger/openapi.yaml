@@ -1,0 +1,574 @@
+openapi: 3.0.3
+info:
+  title: Orpind E-Commerce API
+  description: |
+    Complete REST API for the Orpind premium organic spices e-commerce platform.
+    Built with Express.js, MongoDB, and JWT authentication.
+  version: 1.0.0
+  contact:
+    name: Orpind Support
+    email: support@orpind.com
+  license:
+    name: ISC
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Development
+  - url: https://api.orpind.com/api/v1
+    description: Production
+
+security:
+  - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        compareAtPrice:
+          type: number
+        sku:
+          type: string
+        category:
+          $ref: '#/components/schemas/Category'
+        images:
+          type: array
+          items:
+            type: object
+        tags:
+          type: array
+          items:
+            type: string
+        isActive:
+          type: boolean
+        isFeatured:
+          type: boolean
+
+    Category:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        parentId:
+          type: string
+        sortOrder:
+          type: number
+
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        role:
+          type: string
+        isActive:
+          type: boolean
+
+    Order:
+      type: object
+      properties:
+        _id:
+          type: string
+        orderNumber:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+        items:
+          type: array
+          items:
+            type: object
+        total:
+          type: number
+        status:
+          type: string
+          enum: [pending, confirmed, processing, shipped, delivered, cancelled, returned]
+        paymentStatus:
+          type: string
+
+    CartItem:
+      type: object
+      properties:
+        product:
+          type: string
+        quantity:
+          type: number
+        variant:
+          type: string
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+
+    RegisterRequest:
+      type: object
+      required: [firstName, lastName, email, password]
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        phone:
+          type: string
+
+    AuthTokens:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+tags:
+  - name: Auth
+    description: Authentication and authorization
+  - name: Users
+    description: User profile management
+  - name: Products
+    description: Product catalog
+  - name: Categories
+    description: Product categories
+  - name: Cart
+    description: Shopping cart
+  - name: Orders
+    description: Order management
+  - name: Payments
+    description: Payment processing
+  - name: Reviews
+    description: Product reviews
+  - name: Coupons
+    description: Discount coupons
+  - name: Blogs
+    description: Blog posts
+  - name: Recipes
+    description: Recipe content
+  - name: Search
+    description: Product search
+  - name: Admin
+    description: Admin dashboard operations
+
+paths:
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Register a new user
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      summary: Refresh access token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        '200':
+          description: Token refreshed
+
+  /products:
+    get:
+      tags: [Products]
+      summary: List products
+      security: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [price_asc, price_desc, newest, popular]
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product list
+
+  /products/{id}:
+    get:
+      tags: [Products]
+      summary: Get product by ID
+      security: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product details
+
+  /categories:
+    get:
+      tags: [Categories]
+      summary: List categories
+      security: []
+      responses:
+        '200':
+          description: Category tree
+
+  /cart:
+    get:
+      tags: [Cart]
+      summary: Get cart
+      responses:
+        '200':
+          description: Cart contents
+
+  /orders:
+    get:
+      tags: [Orders]
+      summary: List user orders
+      responses:
+        '200':
+          description: Order list
+    post:
+      tags: [Orders]
+      summary: Create order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shippingAddress:
+                  type: object
+                billingAddress:
+                  type: object
+                couponCode:
+                  type: string
+      responses:
+        '201':
+          description: Order created
+
+  /orders/{id}:
+    get:
+      tags: [Orders]
+      summary: Get order details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order details
+
+  /payments/create:
+    post:
+      tags: [Payments]
+      summary: Create Razorpay order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderId:
+                  type: string
+      responses:
+        '200':
+          description: Payment order created
+
+  /payments/verify:
+    post:
+      tags: [Payments]
+      summary: Verify payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                razorpay_order_id:
+                  type: string
+                razorpay_payment_id:
+                  type: string
+                razorpay_signature:
+                  type: string
+      responses:
+        '200':
+          description: Payment verified
+
+  /reviews/product/{productId}:
+    get:
+      tags: [Reviews]
+      summary: Get product reviews
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Review list
+
+  /blogs:
+    get:
+      tags: [Blogs]
+      summary: List blog posts
+      security: []
+      responses:
+        '200':
+          description: Blog list
+
+  /recipes:
+    get:
+      tags: [Recipes]
+      summary: List recipes
+      security: []
+      responses:
+        '200':
+          description: Recipe list
+
+  /search:
+    get:
+      tags: [Search]
+      summary: Search products
+      security: []
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results
+
+  /admin/dashboard:
+    get:
+      tags: [Admin]
+      summary: Dashboard stats
+      responses:
+        '200':
+          description: Dashboard data
+
+  /admin/products:
+    get:
+      tags: [Admin]
+      summary: List all products (admin)
+      responses:
+        '200':
+          description: Product list
+    post:
+      tags: [Admin]
+      summary: Create product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: Product created
+
+  /admin/orders:
+    get:
+      tags: [Admin]
+      summary: List all orders (admin)
+      responses:
+        '200':
+          description: Order list
+
+  /admin/users:
+    get:
+      tags: [Admin]
+      summary: List all users (admin)
+      responses:
+        '200':
+          description: User list
+
+  /admin/coupons:
+    get:
+      tags: [Admin]
+      summary: List coupons
+      responses:
+        '200':
+          description: Coupon list
+    post:
+      tags: [Admin]
+      summary: Create coupon
+      responses:
+        '201':
+          description: Coupon created
+
+  /admin/reviews:
+    get:
+      tags: [Admin]
+      summary: List all reviews
+      responses:
+        '200':
+          description: Review list
+
+  /admin/blogs:
+    get:
+      tags: [Admin]
+      summary: List blogs (admin)
+      responses:
+        '200':
+          description: Blog list
+    post:
+      tags: [Admin]
+      summary: Create blog post
+      responses:
+        '201':
+          description: Blog created
+
+  /admin/inventory:
+    get:
+      tags: [Admin]
+      summary: Inventory overview
+      responses:
+        '200':
+          description: Inventory data
