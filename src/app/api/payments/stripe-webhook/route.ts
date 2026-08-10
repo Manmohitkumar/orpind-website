@@ -74,11 +74,14 @@ async function handlePaymentFailed(paymentIntent: any) {
 
   if (!order) return;
 
-  await prisma.order.update({
-    where: { id: order.id },
+  if (order.paymentStatus === 'COMPLETED') return;
+
+  await prisma.order.updateMany({
+    where: { id: order.id, paymentStatus: { not: 'COMPLETED' } },
     data: {
-      paymentStatus: 'FAILED',
-      orderStatus: 'CANCELLED',
+      paymentStatus: 'COMPLETED',
+      orderStatus: 'CONFIRMED',
+      paidAt: new Date(),
     },
   });
 
@@ -101,11 +104,14 @@ async function handleRefundUpdated(charge: any) {
 
   if (!order) return;
 
-  await prisma.order.update({
-    where: { id: order.id },
+  if (order.paymentStatus === 'FAILED' || order.paymentStatus === 'CANCELLED' || order.paymentStatus === 'COMPLETED') return;
+
+  const cancelled = await prisma.order.updateMany({
+    where: { id: order.id, paymentStatus: { notIn: ['FAILED', 'CANCELLED', 'COMPLETED'] } },
     data: {
-      paymentStatus: 'REFUNDED',
-      orderStatus: 'RETURNED',
+      paymentStatus: 'FAILED',
+      orderStatus: 'CANCELLED',
     },
   });
+  if (cancelled.count === 0) return;
 }

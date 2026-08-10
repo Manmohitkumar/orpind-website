@@ -58,11 +58,20 @@ export async function POST(request: NextRequest) {
 
   const { items, shippingAddress, paymentMethod } = await request.json();
 
-  if (!items || items.length === 0) {
-    return NextResponse.json({ error: 'No items in order' }, { status: 400 });
+  const allowedPaymentMethods = new Set(['COD', 'RAZORPAY', 'STRIPE']);
+  if (!Array.isArray(items) || items.length === 0 || items.length > 50) {
+    return NextResponse.json({ error: 'Order must contain between 1 and 50 items' }, { status: 400 });
+  }
+  if (paymentMethod && !allowedPaymentMethods.has(paymentMethod)) {
+    return NextResponse.json({ error: 'Invalid payment method' }, { status: 400 });
+  }
+  for (const item of items) {
+    if (typeof item?.productId !== 'string' || !Number.isInteger(item.quantity) || item.quantity < 1 || item.quantity > 100) {
+      return NextResponse.json({ error: 'Each item must have a valid product and quantity' }, { status: 400 });
+    }
   }
 
-  const productIds = items.map((item: any) => item.productId);
+  const productIds = [...new Set(items.map((item: { productId: string }) => item.productId))];
   const products = await prisma.product.findMany({
     where: { id: { in: productIds }, isActive: true },
   });
@@ -95,8 +104,7 @@ export async function POST(request: NextRequest) {
   const tax = Math.round(subtotal * 0.05);
   const total = subtotal + shipping + tax;
 
-  const orderCount = await prisma.order.count();
-  const orderNumber = `ORD-${String(orderCount + 1).padStart(6, '0')}`;
+  const orderNumber = `ORD-${crypto.randomUUID().replaceAll('-', '').slice(0, 12).toUpperCase()}`;
 
   const order = await prisma.$transaction(async (tx) => {
     const newOrder = await tx.order.create({
@@ -117,10 +125,13 @@ export async function POST(request: NextRequest) {
     });
 
     for (const item of orderItems) {
-      await tx.product.update({
-        where: { id: item.productId },
+      const updated = await tx.product.updateMany({
+        where: { id: item.productId, isActive: true, stockCount: { gte: item.quantity } },
         data: { stockCount: { decrement: item.quantity } },
       });
+      if (updated.count !== 1) {
+        throw new Error(`Insufficient stock for ${item.productName}`);
+      }
     }
 
     await tx.cartItem.deleteMany({ where: { userId: user.id } });

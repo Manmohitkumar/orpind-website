@@ -3,8 +3,16 @@ import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'orpind-dev-secret-change-in-production';
-const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'orpind-dev-refresh-secret-change';
+function requiredSecret(name: 'JWT_SECRET' | 'JWT_REFRESH_SECRET'): string {
+  const value = process.env[name];
+  if (!value || value.length < 32) {
+    throw new Error(`${name} must be configured with at least 32 characters`);
+  }
+  return value;
+}
+
+const JWT_SECRET = requiredSecret('JWT_SECRET');
+const JWT_REFRESH_SECRET = requiredSecret('JWT_REFRESH_SECRET');
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '15m';
 const JWT_REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || '7d';
 
